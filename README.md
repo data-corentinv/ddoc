@@ -65,3 +65,4 @@ TODO
 - Explains differents addons
 - Explains how to complete metadata.json file
 - Correlation matrix of continuous features (only V cramer yet)
+- Tests
