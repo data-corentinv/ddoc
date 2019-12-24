@@ -12,7 +12,7 @@ install:
 	python3 -m venv .venv
 	. .venv/bin/activate && \
 		pip install -r requirements.txt --no-cache-dir
-	
+
 word:
 	python ddoc/main.py --type-report='word' --out-directory='$(out_directory)' --metadata-location='$(metadata_location)' --data-location='$(data_location)' --addons='$(addons)'
 
@@ -38,4 +38,3 @@ clean: clean-dev
 clean-dev: 
 	rm -rf .venv
 	find -iname "*.pyc" -delete
-
