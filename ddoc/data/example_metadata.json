@@ -1,0 +1,74 @@
+{
+    "description": "Attention les types ont \u00e9t\u00e9 inf\u00e9rr\u00e9s automatiquement, ils sont peut-\u00eatre faux",
+    "champs": {
+        "mean radius": {
+            "type": "numerique",
+            "sous-type": "float",
+            "alerte": "utilisable"
+        },
+        "mean texture": {
+            "type": "numerique",
+            "sous-type": "float",
+            "alerte": "utilisable"
+        },
+        "mean perimeter": {
+            "type": "numerique",
+            "sous-type": "float",
+            "alerte": "utilisable"
+        },
+        "mean area": {
+            "type": "numerique",
+            "sous-type": "float",
+            "alerte": "utilisable"
+        },
+        "worst symmetry": {
+            "type": "numerique",
+            "sous-type": "float",
+            "alerte": "utilisable"
+        },
+        "worst fractal dimension": {
+            "type": "numerique",
+            "sous-type": "float",
+            "alerte": "utilisable"
+        },
+        "mean radius discrete": {
+            "type": "categoriel",
+            "sous-type": "string",
+            "alerte": "utilisable",
+            "warning": "Cette variable a été découpée aléatoirement !",
+            "note": "Exemple de note.",
+            "origine": "hospital",
+            "provenance": "sklearn"
+        },
+        "mean texture discrete": {
+            "type": "categoriel",
+            "sous-type": "string",
+            "alerte": "utilisable"
+        },
+        "mean perimeter discrete": {
+            "type": "categoriel",
+            "sous-type": "string",
+            "alerte": "utilisable"
+        },
+        "mean area discrete": {
+            "type": "categoriel",
+            "sous-type": "string",
+            "alerte": "utilisable"
+        },
+        "worst compactness discrete": {
+            "type": "categoriel",
+            "sous-type": "string",
+            "alerte": "utilisable"
+        },
+        "TARGETASFEATURE": {
+            "type": "categoriel",
+            "sous-type": "string",
+            "alerte": "utilisable"
+        },
+        "TARGET": {
+            "type": "numerique",
+            "sous-type": "float",
+            "alerte": "utilisable"
+        }
+    }
+}
