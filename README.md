@@ -21,9 +21,9 @@ Quick start
 **Bash**
 ``` shell 
 # for excel documentation 
-make excel your_file.csv out_directory='.'
+make excel data_location='your_file.csv'
 # for word documentation
-make word your_file.csv addons='none' out_directory='.' metadata_directory='./metadata.json'
+make word data_location='your_file.csv'
 ```
 
 **Python**
