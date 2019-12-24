@@ -44,16 +44,16 @@ def generate(df, out_directory='', metadata_location=None, addons='none', **kwar
         create_template(df, metadata_location, **kwargs)
     field_addons =[]
     if addons=='all':
-        field_addons = [AddonIsTarget(), AddonIsTargetQuantile()] # FIXME : Change for generic addons (add target)
-    elif addons=='all++': # V Cramer sur les variables categorielles
-        field_addons = [AddonIsTarget(), AddonIsTargetQuantile()] # FIXME : Change for generic addons (add target)
+        field_addons = [AddonIsTarget(), AddonIsTargetQuantile()] 
+    elif addons=='all++': # V Cramer 
+        field_addons = [AddonIsTarget(), AddonIsTargetQuantile()] 
         addons = [CorrelationAddon()]
     elif addons=='none':
-        field_addons = [] # FIXME : Change for generic addons (add target)
+        field_addons = [] 
     elif addons=='ratio':
-        field_addons = [AddonIsTarget()] # FIXME : Change for generic addons (add target)
+        field_addons = [AddonIsTarget()] 
     elif addons=='quantile':
-        field_addons = [AddonIsTargetQuantile()] # FIXME : Change for generic addons (add target)
+        field_addons = [AddonIsTargetQuantile()] 
     generator = WordGenerator(table=df, out_directory=out_directory, metadata_location=metadata_location, field_addons=field_addons, addons=addons)
     generator.generate(**kwargs)
 
