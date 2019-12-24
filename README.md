@@ -58,3 +58,10 @@ For more details, please refer to <a href="./docs/contributing.rst">CONTRIBUTING
 Maintainers
 -----------
 For any quesiton you can contact the <a href="./AUTHORS.rst">team members</a> whose is responsible for the project.
+
+TODO
+----
+- Sphinx documentation (create gallery examples)
+- Explains differents addons
+- Explains how to complete metadata.json file
+- Correlation matrix of continuous features (only V cramer yet)
