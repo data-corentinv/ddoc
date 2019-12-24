@@ -1,7 +1,7 @@
 ddoc 
 ====
 
-<img align='right' width="80" height="70" src="logo_.png"/>
+<img align='right' width="80" height="70" src="logo.png"/>
 
 ddoc is a python module for generating data documentation in Excel and Word format. 
 
