@@ -1,7 +1,7 @@
 ddoc 
 ====
 
-<img align='right' width="80" height="80" src="logo.png"/>
+<img align='right' width="80" height="70" src="logo_.png"/>
 
 ddoc is a python module for generating data documentation in Excel and Word format. 
 
@@ -47,8 +47,10 @@ Check out call for contributions to see what can be improved, or open an issue i
 To make easier the contribution feel free to use virtualenv :
 
 ``` shell 
-make install # create .venv and install requirement packages
-. activate.sh # activate .venv
+# create .venv and install requirement packages
+make install 
+# activate .venv
+. activate.sh 
 ```
 
 For more details, please refer to <a href="./docs/contributing.rst">CONTRIBUTING</a>.
