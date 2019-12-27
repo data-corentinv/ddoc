@@ -3,6 +3,30 @@ import pandas as pd
 import json
 import collections
 
+def create_template(df, out_location, **kwargs):
+    import json
+    """
+    Infer a metadata template for dataset
+    """
+    if isinstance(df, str):
+        if(df.endswith('.csv')):
+            df = pd.read_csv(df, **kwargs)
+        else:
+            df = pd.read_pickle(df)
+    result = {"description": "Attention les types ont été inférrés automatiquement, ils sont peut-être faux"}
+    champs = {}
+    for col in df.columns:
+        champs[col] = {
+            'type': "numerique" if df[col].dtype.kind in 'biufc' else "categoriel",
+            "sous-type": "float" if df[col].dtype.kind in 'biufc' else "string"
+        }
+
+    result['champs'] = champs
+    res = json.dumps(result, indent=4)
+    with open(out_location, 'w') as f:
+        f.write(res)
+
+
 class Metadata:
     """docstring for Metadata"""
     def __init__(self, location):
