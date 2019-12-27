@@ -19,8 +19,10 @@ word:
 excel:
 	python ddoc/main.py --type-report='excel' --out-directory='$(out_directory)' --data-location='$(data_location)'
 
-doc:
-	echo TODO
+doc: install
+	. .venv/bin/activate && \
+		cd docs && \
+		make html
 
 tests: 
 	docker-compose run app pytest -s tests/unit_tests/
@@ -36,5 +38,7 @@ clean: clean-dev
 	find -iname "__pycache__" -delete
 
 clean-dev: 
+	cd docs; make clean
 	rm -rf .venv
 	find -iname "*.pyc" -delete
+	
