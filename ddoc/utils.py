@@ -1,6 +1,7 @@
 
 from .reporting.word_generator import WordGenerator
 from .reporting.excel_generator import ExcelGenerator
+from .reporting.metadata import create_template
 from .addons.addons import *
 from .reporting.addon import *
 import os
@@ -15,11 +16,24 @@ Info: warning, une copie du df est place en parametre pour eviter de ressortir l
 """
 
 def generate_excel(df, out_directory='', metadata_location=None, addons='none', **kwargs):
-    """
-    Generic method to make a Excel Report
-    :param df: The pandas DataFrame to describe, or a location to csv file if it ends with .csv or pickle file otherwise
-    :param out_directory: the directory location where you want to output the report, default: current directory
-    :param metadata_location: The location of metadata. If None, automatically infer metadata and store it in the same folder that out location, default: None
+    """ Generic method to make a Excel Report
+
+    Parameters
+    ----------
+        df: dataset, pd.DataFrame
+            The pandas DataFrame to describe, or a location to csv file if it ends with .csv or pickle file otherwise
+        out_directory: path, str
+            the directory location where you want to output the report, default: current directory
+        metadata_location: path, str
+            The location of metadata. If None, automatically infer metadata and store it in the same folder that out location, default: None
+    
+    Example
+    -------
+        .. code-block:: python
+    
+            from ddoc import generate
+            generate('your_file.csv')
+            
     """
     if metadata_location is None:
         metadata_location = os.path.join(out_directory, 'metadata.json')
@@ -29,15 +43,30 @@ def generate_excel(df, out_directory='', metadata_location=None, addons='none', 
     generator.generate(**kwargs)
 
 def generate(df, out_directory='', metadata_location=None, addons='none', **kwargs):
-    """
-    Generic method to make a Word Report
-    :param df: The pandas DataFrame to describe, or a location to csv file if it ends with .csv or pickle file otherwise
-    :param out_directory: the directory location where you want to output the report, default: current directory
-    :param metadata_location: The location of metadata. If None, automatically infer metadata and store it in the same folder that out location, default: None
-    :param addons: Addons you want to put in the report, default:
-        - 'all' : It will use a standard set of addons such as projection on target and automatic discretisation of numerical variables
-        - 'none' : No addons
-        - 'ratio': Only Addon with TARGET proportion
+    """ Generic method to make a Word Report
+
+    Parameters
+    ----------
+    
+        df: data, pd.DataFrame
+            The pandas DataFrame to describe, or a location to csv file if it ends with .csv or pickle file otherwise
+        out_directory: path, str
+            the directory location where you want to output the report, default: current directory
+        metadata_location: path, str
+            The location of metadata. If None, automatically infer metadata and store it in the same folder that out location, default: None
+        addons: param, str
+            Addons you want to put in the report, default:
+            - 'all' : It will use a standard set of addons such as projection on target and automatic discretisation of numerical variables
+            - 'none' : No addons
+            - 'ratio': Only Addon with TARGET proportion
+    
+    Example
+    -------
+        .. code-block:: python
+    
+            from ddoc import generate
+            generate('your_file.csv')
+            
     """
     if metadata_location is None:
         metadata_location = os.path.join(out_directory, 'metadata.json')
@@ -58,25 +87,4 @@ def generate(df, out_directory='', metadata_location=None, addons='none', **kwar
     generator.generate(**kwargs)
 
 
-def create_template(df, out_location, **kwargs):
-    import json
-    """
-    Infer a metadata template for dataset
-    """
-    if isinstance(df, str):
-        if(df.endswith('.csv')):
-            df = pd.read_csv(df, **kwargs)
-        else:
-            df = pd.read_pickle(df)
-    result = {"description": "Attention les types ont été inférrés automatiquement, ils sont peut-être faux"}
-    champs = {}
-    for col in df.columns:
-        champs[col] = {
-            'type': "numerique" if df[col].dtype.kind in 'biufc' else "categoriel",
-            "sous-type": "float" if df[col].dtype.kind in 'biufc' else "string"
-        }
 
-    result['champs'] = champs
-    res = json.dumps(result, indent=4)
-    with open(out_location, 'w') as f:
-        f.write(res)
