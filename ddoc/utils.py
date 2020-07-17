@@ -74,16 +74,17 @@ def generate(df, out_directory='', metadata_location=None, addons='none', **kwar
     field_addons =[]
     if addons=='all':
         field_addons = [AddonIsTarget(), AddonIsTargetQuantile()] 
+        addons = "none"
     elif addons=='all++': # V Cramer 
         field_addons = [AddonIsTarget(), AddonIsTargetQuantile()] 
-        addons = [CorrelationAddon()]
+        addons = [CorrelationAddon()]#, PearsonCorrelationAddon()]
     elif addons=='none':
         field_addons = [] 
     elif addons=='ratio':
         field_addons = [AddonIsTarget()] 
     elif addons=='quantile':
         field_addons = [AddonIsTargetQuantile()] 
-    generator = WordGenerator(table=df, out_directory=out_directory, metadata_location=metadata_location, field_addons=field_addons, addons=addons)
+    generator = WordGenerator(table=df.copy(), out_directory=out_directory, metadata_location=metadata_location, field_addons=field_addons, addons=addons)
     generator.generate(**kwargs)
 
 

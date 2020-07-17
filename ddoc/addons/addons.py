@@ -11,7 +11,7 @@ from .utils.utils import study_feature_reconstruct
 class AddonIsTarget:
     def __call__(self, document, metadata, df, field):
         study_feature_reconstruct(df, field, label='TARGET')
-        plt.savefig('temp2.png')
+        plt.savefig('temp2.png', bbox_inches = 'tight')
         document.add_picture('temp2.png', width=Cm(15.0), height=Cm(9.0))
         return document
 

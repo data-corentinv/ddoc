@@ -188,6 +188,8 @@ class CorrelationAddon(Addon):
         for num_var1, name_var1 in enumerate(all_variables['variable']):
             corr_df[name_var1][num_var1] = 1.0
 
+        #pdb.set_trace()
+
         # # Set up the matplotlib figure
         # from matplotlib import rcParams
         # rcParams.update({'figure.autolayout': True})
@@ -207,7 +209,8 @@ class CorrelationAddon(Addon):
 
         linkage = sp.cluster.hierarchy.linkage(sp.spatial.distance.squareform(1-corr_df), method='average')
         fig, ax = plt.subplots()
-        heatmap_clustered = sns.clustermap(corr_df, row_linkage=linkage, col_linkage=linkage, cmap=sns.light_palette("seagreen", as_cmap = True))
+        heatmap_clustered = sns.clustermap(corr_df, row_linkage=linkage, col_linkage=linkage, cmap=sns.light_palette((260, 75, 60), input="husl"))#cmap=sns.light_palette("seagreen", as_cmap = True))
+        print(corr_df)
         #heatmap_clustered = sns.clustermap(corr_df, cmap=sns.light_palette((210, 90, 60), input="husl", as_cmap = True))
         name = "temp_matrix.png"
         plt.setp(heatmap_clustered.ax_heatmap.get_yticklabels(), rotation=0)
@@ -235,6 +238,51 @@ class CorrelationAddon(Addon):
 
         return document
 
+class PearsonCorrelationAddon(Addon):
+    def __call__(self, document, metadata, df):
+        document.add_heading('Analyse des corrélations (Pearson)', 2)
+
+        p = document.add_paragraph()
+        p.add_run("Affichage des corrélations")
+
+        all_variables = pd.DataFrame(df.columns, columns = ['variable'])
+
+        types = []
+        sous_types = []
+        status = []
+        for var in all_variables['variable']:
+            types.append(metadata.get(str(var), {}).get('type', 'inconnu'))
+            sous_types.append(metadata.get(str(var), {}).get('sous-type', 'inconnu'))
+            status.append(metadata.get(str(var), {}).get('alerte', 'inconnu'))
+        types = pd.DataFrame(types, columns = ['type'])
+        sous_types = pd.DataFrame(types, columns = ['sous_type'])
+        status = pd.DataFrame(status, columns = ['status'])
+
+        all_variables = pd.concat([all_variables, types, status, sous_types], axis = 1)
+        all_variables = all_variables.set_index(all_variables['variable'])
+        all_variables = all_variables.query(
+            "(status == 'modelisable' or status == 'utilisable') and (type == 'numerique')")
+
+        corr_df = df[list(all_variables['variable'])].corr(method='pearson')
+
+       #pdb.set_trace()
+        linkage = sp.cluster.hierarchy.linkage(sp.spatial.distance.squareform(1-corr_df), method='average')
+        fig, ax = plt.subplots(figsize=(10,10))
+        #heatmap =sns.heatmap(corr_df, xticklabels=corr_df.columns,yticklabels=corr_df.columns, cmap=sns.light_palette((260, 75, 60), input="husl"), ax=ax)
+        heatmap_clustered = sns.clustermap(corr_df, row_linkage=linkage, col_linkage=linkage, cmap=sns.light_palette((260, 75, 60), input="husl"))
+        name = "temp_matrix_pearson.png"
+        plt.setp(heatmap_clustered.ax_heatmap.get_yticklabels(), rotation=0)
+        plt.setp(heatmap_clustered.ax_heatmap.get_xticklabels(), rotation=90)
+        heatmap_clustered.savefig(name)
+        #fig.savefig(name, dpi=400)
+        #plt.setp(corr_df.columns, rotation=0)
+        #plt.setp(corr_df.columns, rotation=90)
+
+        document.add_paragraph("Pearson calculé pour toutes les paires de variables numérique")
+        document.add_picture(name, width=Cm(15.0), height=Cm(15.0))
+        last_paragraph = document.paragraphs[-1]
+        last_paragraph.alignment = WD_ALIGN_PARAGRAPH.CENTER
+        return document
 
 
 class RandomForestCorrelationAddon(Addon):
