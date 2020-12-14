@@ -74,7 +74,9 @@ def generate(df, out_directory='', metadata_location=None, addons='none', **kwar
     field_addons =[]
     if addons=='all':
         field_addons = [AddonIsTarget(), AddonIsTargetQuantile()] 
+        print(addons)
         addons = "none"
+        print(addons)
     elif addons=='all++': # V Cramer 
         field_addons = [AddonIsTarget(), AddonIsTargetQuantile()] 
         addons = [CorrelationAddon()]#, PearsonCorrelationAddon()]
